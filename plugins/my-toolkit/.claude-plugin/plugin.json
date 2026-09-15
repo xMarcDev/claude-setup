@@ -1,0 +1,17 @@
+{
+  "name": "my-toolkit",
+  "displayName": "Mi Toolkit",
+  "description": "Mis skills de uso diario para Claude Code, empaquetadas para dejar una maquina nueva lista en un solo paso.",
+  "version": "0.1.0",
+  "author": {
+    "name": "David Marcelo",
+    "url": "https://github.com/xMarcDev"
+  },
+  "repository": "https://github.com/xMarcDev/claude-setup",
+  "keywords": [
+    "skills",
+    "productivity",
+    "setup"
+  ],
+  "skills": "./skills/"
+}

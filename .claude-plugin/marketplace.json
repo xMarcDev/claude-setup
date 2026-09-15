@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-marketplace.json",
+  "name": "xMarcDev-claude-setup",
+  "owner": {
+    "name": "David Marcelo",
+    "url": "https://github.com/xMarcDev"
+  },
+  "description": "Mi setup personal de Claude Code: las skills que uso a diario, listas para instalar en cualquier maquina.",
+  "version": "0.1.0",
+  "allowCrossMarketplaceDependenciesOn": [
+    "claude-plugins-official"
+  ],
+  "plugins": [
+    {
+      "name": "my-toolkit",
+      "source": "./plugins/my-toolkit",
+      "displayName": "Mi Toolkit",
+      "description": "Mis skills propias y las de terceros que uso; arrastra como dependencia los plugins de skills que tengo instalados.",
+      "defaultEnabled": true,
+      "dependencies": [
+        "mattpocock-skills@claude-plugins-official",
+        "code-review@claude-plugins-official"
+      ]
+    }
+  ]
+}
