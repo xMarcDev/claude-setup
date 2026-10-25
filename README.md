@@ -32,6 +32,7 @@ claude-setup/
 |---|---|---|
 | `optimizador-prompts` | mía | — |
 | `superpowers` | mía | — |
+| `mms-nest-structure` 🏷️ **CLEMENTE** | mía | — |
 | `nestjs-project-analyzer` 🏷️ **CLEMENTE** | mía | — |
 | `archify` | [tt-a1i](https://github.com/tt-a1i), basado en `Cocoon-AI/architecture-diagram-generator` | MIT |
 | `vercel-react-best-practices` | [Vercel](https://github.com/vercel) | MIT |
