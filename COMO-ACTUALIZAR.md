@@ -91,10 +91,44 @@ claude plugin prune                # quita las dependencias que quedaron huérfa
 claude plugin marketplace remove xMarcDev-claude-setup
 ```
 
-## 6. Subir los cambios
+## 6. Subir la versión
+
+**Obligatorio en cada cambio del plugin.** `claude plugin update` solo descarga algo nuevo si la
+`version` subió. Con la misma versión responde *"already at the latest version"* y las skills
+nuevas no llegan nunca.
+
+Cambiarla en los dos archivos, con el mismo valor:
+
+- `plugins/my-toolkit/.claude-plugin/plugin.json` → `"version"`
+- `.claude-plugin/marketplace.json` → `"version"`
+
+Criterio: skill nueva o eliminada → sube el minor (`0.2.0` → `0.3.0`); ajuste dentro de una
+skill → sube el patch (`0.2.0` → `0.2.1`).
+
+## 7. Subir los cambios
 
 ```bash
 git add -A
 git commit -m "Actualizo skills con lo que tengo instalado"
 git push
 ```
+
+## 8. Actualizar en las otras máquinas
+
+```bash
+claude plugin marketplace update xMarcDev-claude-setup   # refresca el catálogo
+claude plugin update my-toolkit@xMarcDev-claude-setup     # baja la nueva versión
+```
+
+Reiniciar Claude Code para que cargue las skills. Comprobar con `claude plugin details my-toolkit`.
+
+Si `update` dice *"already at the latest version"* pero faltan skills, alguien se olvidó del
+paso 6. Arreglo inmediato: reinstalar.
+
+```bash
+claude plugin uninstall my-toolkit@xMarcDev-claude-setup --scope user
+claude plugin install my-toolkit@xMarcDev-claude-setup --scope user
+```
+
+No correr `claude plugin prune` entre medias: borraría las dependencias (`code-review`) que la
+reinstalación vuelve a necesitar.
