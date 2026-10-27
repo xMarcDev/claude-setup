@@ -6,7 +6,7 @@
     "url": "https://github.com/xMarcDev"
   },
   "description": "Mi setup personal de Claude Code: las skills que uso a diario, listas para instalar en cualquier maquina.",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "allowCrossMarketplaceDependenciesOn": [
     "claude-plugins-official"
   ],

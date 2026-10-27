@@ -1,5 +1,5 @@
 {
-  "description": "Evita que los commits y PR creados por Claude lleven Co-Authored-By: Claude o 'Generated with Claude Code'.",
+  "description": "Hooks de my-toolkit: bloquea la atribucion de Claude en commits/PR y reinyecta el contexto de trabajo (ramas, cambios, notas de tarea) al iniciar y tras compactar.",
   "hooks": {
     "SessionStart": [
       {
@@ -8,6 +8,15 @@
             "type": "command",
             "command": "python3 \"${CLAUDE_PLUGIN_ROOT}/hooks/no-claude-attribution.py\" session",
             "timeout": 10
+          }
+        ]
+      },
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 \"${CLAUDE_PLUGIN_ROOT}/hooks/work-context.py\"",
+            "timeout": 15
           }
         ]
       }
