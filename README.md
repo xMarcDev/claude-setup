@@ -14,9 +14,12 @@ claude-setup/
 ├── .claude-plugin/
 │   └── marketplace.json         # catálogo del marketplace + dependencias del plugin
 ├── plugins/
-│   └── my-toolkit/              # el plugin: SOLO skills, sin MCP
+│   └── my-toolkit/              # el plugin: skills y hooks, sin MCP
 │       ├── .claude-plugin/
 │       │   └── plugin.json
+│       ├── hooks/
+│       │   ├── hooks.json       # hooks que se activan con el plugin
+│       │   └── <script>.py
 │       └── skills/
 │           └── <cada-skill>/SKILL.md
 └── mcp-guides/                  # documentación manual, NO se instala
@@ -40,6 +43,23 @@ claude-setup/
 Las dos últimas son de terceros y están copiadas dentro del repo porque no existen como
 plugin en ningún marketplace — es la única forma de que viajen conmigo. Conservan sus
 archivos de licencia originales; ver [Atribución](#atribución).
+
+### Hooks incluidos en el plugin
+
+Viajan con el plugin, así que cada máquina los recibe con el `plugin update` de siempre, sin
+tocar `~/.claude/settings.json`.
+
+| Hook | Evento | Qué hace |
+|---|---|---|
+| `no-claude-attribution.py` | `SessionStart` | Le indica a Claude que no añada `Co-Authored-By: Claude` en commits ni "Generated with Claude Code" en PR |
+| `no-claude-attribution.py` | `PreToolUse` (Bash) | Red de seguridad: si un `git commit` o `gh pr create/edit` lleva esa atribución, bloquea el comando y Claude lo repite sin ella |
+
+Requiere `python3`. Si no está instalado, el hook falla sin bloquear nada.
+
+Bloquea en vez de reescribir el comando a propósito: para reescribirlo, el hook tendría que
+aprobarlo él mismo, y eso se saltaría los permisos. Límite conocido: no ve el mensaje si el
+commit se hace con `git commit -F <archivo>` o el PR con `--body-file <archivo>`, porque el
+texto está en un archivo y no en el comando.
 
 ### Skills que llegan como dependencia
 
