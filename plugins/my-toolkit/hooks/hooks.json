@@ -1,0 +1,28 @@
+{
+  "description": "Evita que los commits y PR creados por Claude lleven Co-Authored-By: Claude o 'Generated with Claude Code'.",
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 \"${CLAUDE_PLUGIN_ROOT}/hooks/no-claude-attribution.py\" session",
+            "timeout": 10
+          }
+        ]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 \"${CLAUDE_PLUGIN_ROOT}/hooks/no-claude-attribution.py\" check",
+            "timeout": 10
+          }
+        ]
+      }
+    ]
+  }
+}

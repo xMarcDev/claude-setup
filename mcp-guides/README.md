@@ -1,7 +1,7 @@
 # Guías de MCP
 
 Esta carpeta es **solo documentación**. Nada de lo que hay aquí se instala con el plugin:
-`my-toolkit` empaqueta únicamente skills. Los servidores MCP se instalan a mano, siguiendo
+`my-toolkit` empaqueta skills y hooks, ningún MCP. Los servidores MCP se instalan a mano, siguiendo
 la guía correspondiente.
 
 Se hizo así a propósito. De los MCP que uso, la mayoría no son empaquetables en un
