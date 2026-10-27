@@ -2,7 +2,7 @@
   "name": "my-toolkit",
   "displayName": "Mi Toolkit",
   "description": "Mis skills y hooks de uso diario para Claude Code, empaquetados para dejar una maquina nueva lista en un solo paso.",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "author": {
     "name": "David Marcelo",
     "url": "https://github.com/xMarcDev"

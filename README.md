@@ -53,13 +53,46 @@ tocar `~/.claude/settings.json`.
 |---|---|---|
 | `no-claude-attribution.py` | `SessionStart` | Le indica a Claude que no añada `Co-Authored-By: Claude` en commits ni "Generated with Claude Code" en PR |
 | `no-claude-attribution.py` | `PreToolUse` (Bash) | Red de seguridad: si un `git commit` o `gh pr create/edit` lleva esa atribución, bloquea el comando y Claude lo repite sin ella |
+| `work-context.py` | `SessionStart` (inicio, `resume`, `clear` y **tras compactar**) | Le da a Claude el estado del trabajo: ramas de trabajo, archivos sin commitear, últimos commits y las notas de la tarea activa |
 
-Requiere `python3`. Si no está instalado, el hook falla sin bloquear nada.
+Ambos requieren `python3`. Si no está instalado, los hooks fallan sin bloquear nada.
+
+#### `no-claude-attribution`
 
 Bloquea en vez de reescribir el comando a propósito: para reescribirlo, el hook tendría que
 aprobarlo él mismo, y eso se saltaría los permisos. Límite conocido: no ve el mensaje si el
 commit se hace con `git commit -F <archivo>` o el PR con `--body-file <archivo>`, porque el
 texto está en un archivo y no en el comando.
+
+#### `work-context`
+
+Pensado para sesiones largas, donde la compactación resume la conversación y pierde detalles.
+Solo **lee**: nunca crea ni modifica archivos.
+
+| Dónde abro Claude | Qué revisa | Dónde busca las notas |
+|---|---|---|
+| Carpeta con varios repos (ej. `~/Desktop/Clemente`) | Cada repo hijo; muestra solo los que están en una rama de trabajo o tienen cambios | `<carpeta>/docs/tasks/` |
+| Dentro de uno de esos repos | Ese repo | La misma `<carpeta>/docs/tasks/` del padre |
+| Un repo suelto o un monorepo | Ese repo y sus últimos 5 commits | `<repo>/.claude/tasks/` (avisa si no está en `.gitignore`) |
+
+Ramas base, que no cuentan como "de trabajo": `main`, `master`, `qa`, `develop`, `dev`,
+`staging`, `prod` y `production`.
+
+Una nota de tarea es un `.md` que se asocia a una rama de dos formas: por nombre de archivo
+(`feat/payment-methods` → `payment-methods.md`) o con una línea `Ramas:` cuando cubre varios
+repos:
+
+```markdown
+# Métodos de pago
+Ramas: mms-payments@feat/payment-methods, mms-channels@feat/payment-methods
+Estado: CRUD hecho; falta validar duplicados
+Decisiones: soft delete; métodos por store_id
+Siguiente paso: test de PaymentMethodService.create
+```
+
+Si una rama de trabajo no tiene notas, el hook lo informa con la ruta esperada. Las notas las
+escribe y actualiza Claude cuando se lo pides, o siguiendo una regla en el `CLAUDE.md`. Se
+muestran como máximo 40 líneas por nota.
 
 ### Skills que llegan como dependencia
 
